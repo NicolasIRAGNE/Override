@@ -1,0 +1,4 @@
+Le binaire prompt un password avec scanf
+
+Juste apres on voit un cmp avec 0x149c => 5276 en decimal
+Ca marche ouais
