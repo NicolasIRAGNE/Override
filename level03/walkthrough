@@ -1,1 +1,8 @@
-bruteforce ma couille ^^
+ if ((value = (goal - input)) < 21)
+	
+Selon la source seulement 21 possibilites de l'entier du scanf sont prises en compte
+
+for i in {0..21} ; do ./level03 < <(echo $((0x1337d00d - i)) ) ; echo -n $i ;  done
+
+En bruteforcant on voit un comportement different pour i = 18
+on en conclut que le password est 0x1337d00d - 18 = 322424827
