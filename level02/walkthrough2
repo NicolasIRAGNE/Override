@@ -1,0 +1,11 @@
+
+we can see that the printf is using printf(username) is exploitable:
+
+The 1st thing in the stack is the address of password
+The 8th thing in the stack is the content of password
+
+we can use it to show the address of the read level03 password:
+
+To do it we fill the input password with the address of the read password and we use %s on it to print it.
+/home/users/level02/level02 < <(python -c "print '%llx-' * 7 + '%s' + '\n' + '\xf0\xe4\xff\xff\xff\x7f' + '\n'")
+
