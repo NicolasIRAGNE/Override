@@ -1,0 +1,7 @@
+le binaire read un username de 32 caracteres et fait un scanf avec '%u' pour un serial
+ensuite il balance les 2 a une fonction mega compliquee ou il genere un serial a partir de l'username et il le compare avec le serial donne
+du coup avec gdb on lance une premiere fois avec un serial bidon juste pour regarder et on l'essaye apres
+
+./level06
+banane
+6232817

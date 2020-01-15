@@ -1,0 +1,3 @@
+store ecrit a 0xffffda34 + index * 4
+on peut pas trop ecraser les EIP a cause de son check
+idk
