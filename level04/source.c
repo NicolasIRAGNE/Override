@@ -6,9 +6,13 @@
 /*   By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 18:24:33 by ldedier           #+#    #+#             */
-/*   Updated: 2020/01/15 21:16:49 by ldedier          ###   ########.fr       */
+/*   Updated: 2020/01/16 15:59:50 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include </usr/include/sys/user.h>
+
+#define OFFSETOF(TYPE, ELEMENT) ((size_t)&(((TYPE *)0)->ELEMENT))
 
 int main(int argc, char **argv)
 {
@@ -32,9 +36,9 @@ parent_beginning:
 		}
 		else
 		{
-			res = ptrace(3, child_pid, 44, 0);
-			buffer[168] = res;
-			if (res == 11)
+			buffer[168] = ptrace(PTRACE_PEEKUSER, child_pid, OFFSETOF(struct user_regs_struct, orig_eax), NULL);
+			//get value of orig_eax (offset 44) of child
+			if (buffer[168] == 11)
 			{
 				puts("no exec() for you");
 				kill(child_pid, 9);
@@ -45,8 +49,8 @@ parent_beginning:
 	}
 	else //child
 	{
-		prctl(1, 1);
-		ptrace(0, 0, 0, 0);
+		prctl(PR_SET_PDEATHSIG, 1);
+		ptrace(PTRACE_TRACEME, 0, 0, 0); // make me traced by my parent
 		puts("Give me some shellcode, k");
 		gets(buffer + 32);
 	}
