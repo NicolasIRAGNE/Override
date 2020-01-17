@@ -1,0 +1,15 @@
+
+in gdb:
+
+ r < <(python -c "print 'abcdefgh' + '\n' + '42'")
+
+ bypass ptrace protection with set $eax=0
+
+ check hash at the end in
+ 	p/d *(int *)($ebp - 0x10)
+
+get 6234502
+
+cat <(python -c "print 'abcdefgh' + '\n' + '6234502'") - | ./level06
+
+get password !
