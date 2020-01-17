@@ -18,28 +18,18 @@ int main(void)
 	fgets(buffer + 40, 100, stdin);
 	(int)buffer[140] == 0;
 
-ok:
-
-	if (strlen(buffer + 40) >= buffer[140])
-	{
-		printf(buffer + 40);
-		exit(0);
-	}
-	else
+	while (buffer[140] < strlen(buffer + 40))
 	{
 		int res = *(buffer + 40 + buffer[140]);
 
 		if (res & 0xff <= 0x40 || res & 0xff > 0x5a)
-		{
 			(int)buffer[140]++;
-			goto ok;
-		}
 		else
 		{
 			*(buffer + 40 + buffer[140]) ^= 0x20;
 			(int)buffer[140]++;
-			goto ok;
 		}
 	}
-	return (0);
+	printf(buffer + 40);
+	exit(0);
 }
