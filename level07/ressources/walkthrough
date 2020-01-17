@@ -1,0 +1,14 @@
+ 
+
+ ////////////// unset env LINES /////////////////////
+ ////////////// unset env COLUMNS /////////////////////
+ 
+
+ b *0x08048878
+
+mem = buffer + 440 = 0xffffd6b8
+
+
+gdb-peda$ p $ebp -> 0xffffd6e8
+
+ebp + 4 = 0xffffd6ec = mem + 52
