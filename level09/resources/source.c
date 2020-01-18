@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-void set_username(char *buffer)
+
+void set_username(char *msgBuffer)
 {
 	char buffer[160];
 
@@ -19,16 +20,24 @@ void set_username(char *buffer)
 	printf("'>>: '");
 
 	fgets(buffer + 16, 128, stdin);
-	int = 0;
-	while (i < 40)
+
+	int i = 0;
+//+112
+	while (i < 40 && buffer[16 + i] != 0)
 	{
+		msgBuffer[140 + i] = buffer[16 + i];
 		i++;
 	}
 }
 
-void set_msg()
+void set_msg(char *msgBuffer)
 {
+	char buffer[1040];
 
+	buffer[8] = msgBuffer;
+	bzero(buffer + 16, 1024);
+//+47
+	
 }
 
 void handle_msg(void)
