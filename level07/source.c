@@ -30,13 +30,10 @@ int store_number(char *mem)
 	
 	int hash = unintelligible_hash(index);
 
-	if (hash != 0)
+	if (hash != 0 && number >> 24 != 0xb7) //start of system functions
 	{
-		if (number >> 24 != 0xb7) //start of system functions
-		{
-			mem[index >> 2] = number;
-			return (0);
-		}
+		mem[index << 2] = number;
+		return (0);
 	}
 	puts(" *** ERROR! ***");
 	puts("   This index is reserved for wil! ");
@@ -51,7 +48,7 @@ int read_number(char *mem)
 	index = 0;
 	printf(" Index: ");
 	index = get_unum();
-	printf(" Number at data[%u] is %u\n", index, mem[index >> 2]);
+	printf(" Number at data[%u] is %u\n", index, mem[index << 2]);
 	return (0);
 }
 
@@ -84,23 +81,21 @@ int main(int argc, char **argv, char **env) //0xc -> argv , 0x10 -> env
 	while (1)
 	{
 		printf("Input command: ");
-		fgets(buffer + 440, 20, stdin);
 
-		int len = strlen(buffer + 440) - 1;
+		buffer[436] = 1;
+
+		fgets(buffer + 440, 20, stdin);
+	
+		int len = strlen(buffer + 440);
 
 		buffer[440 + len] = 0;
-		if (strcmp(buffer + 440, "store"))
-		{
+	
+		if (!strncmp(buffer + 440, "store", 5))
 			buffer[436] = store_number(buffer + 36);
-		}
-		else if (strcmp(buffer + 440, "read"))
-		{
+		else if (!strncmp(buffer + 440, "read", 4))
 			buffer[436] = read_number(buffer + 36);
-		}
-		else if (strcmp(buffer + 440, "quit"))
-		{
+		else if (!strncmp(buffer + 440, "quit", 4))
 			return 0;
-		}
 		if (buffer[436] == 0)
 			printf(" Completed %s command successfully\n", buffer + 440);
 		else
@@ -111,5 +106,6 @@ int main(int argc, char **argv, char **env) //0xc -> argv , 0x10 -> env
 		*(int *)buffer + 440 + 12 = 0;
 		*(int *)buffer + 440 + 16 = 0;
 	}
+	//stackcheckfail@plt
 	return (0);
 }
